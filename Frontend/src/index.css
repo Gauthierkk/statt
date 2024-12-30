@@ -1,0 +1,64 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+header {
+  text-align: center;
+}
+
+/* Centering the form container */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 5vh;
+}
+
+/* Centering the form */
+form {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+/* General table styling */
+table {
+  width: 100%; /* Full width */
+  border-collapse: collapse; /* Remove double borders */
+  margin-top: 20px; /* Add space above the table */
+  font-family: Arial, sans-serif; /* Clean font */
+  font-size: 14px; /* Standard font size */
+}
+
+/* Table header styling */
+thead th {
+  text-align: left; /* Align text to the left */
+  padding: 8px; /* Add padding for spacing */
+}
+
+/* Table body styling */
+tbody td {
+  padding: 8px; /* Add padding for spacing */
+  border-top: 1px solid #ddd; /* Add a light border between rows */
+}
+
+/* Password list styling inside table cells */
+tbody td ul {
+  margin: 0;
+  padding-left: 16px; /* Slight indentation for list items */
+}
+
+tbody td ul li {
+  list-style-type: disc; /* Use bullet points for passwords */
+}
