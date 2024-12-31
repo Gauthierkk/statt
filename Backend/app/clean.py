@@ -1,3 +1,4 @@
+# filters out all but the defined columns in getKeyValues. Also changes the date format to YYYY-MM-DD
 def clean(data) -> list:
     cleaned_data = []
 
@@ -11,6 +12,7 @@ def clean(data) -> list:
 
     return cleaned_data
 
+# returns pre-defined list of key values, used to determine which columns to visualize in frontend
 def getKeyValues() -> list:
     keyValues = {"permittype":"Permit Type",
                   "permit_type_desc": "Permit Type Description", 

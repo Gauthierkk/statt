@@ -5,10 +5,11 @@ export default function App() {
   const [tableData, setTableData] = useState([]);
   const [tableKeys, setTableKeys] = useState(null);
 
+  /* populate table headers with keys */
   async function fetchKeys() {
     try {
-      const keys = await getTableKeys(); // Assuming getTableKeys() is defined elsewhere
-      setTableKeys(keys); // Update state with resolved keys
+      const keys = await getTableKeys();
+      setTableKeys(keys);
     } catch (error) {
       console.error("Error fetching table keys:", error);
     }
@@ -31,6 +32,9 @@ export default function App() {
 function RequestForm({ setTableData, filters }) {
   const filterKeys = filters ? Object.keys(filters) : [];
 
+  /* row limit options */
+  const rowLimits = [10, 25, 50, 100, 500, 1000];
+
   /* handle form submission */
   /* waits for API call to complete before setting the table data with the result */
   const handleSubmit = async (event) => {
@@ -49,6 +53,7 @@ function RequestForm({ setTableData, filters }) {
     await setTableData(data);
   };
 
+  /* sets the row limit */
   const handleNumResults = async (event) => {
     const numResults = event.target.value;
     await setRowLimit(numResults);
@@ -69,11 +74,9 @@ function RequestForm({ setTableData, filters }) {
         </button>
         <label>Number of result</label>
         <select id="num-results" onChange={handleNumResults}>
-          <option>10</option>
-          <option>50</option>
-          <option>100</option>
-          <option>500</option>
-          <option>1000</option>
+          {rowLimits.map((limit) => (
+            <option key={limit}>{limit}</option>
+          ))}
         </select>
       </form>
     </div>
@@ -82,6 +85,7 @@ function RequestForm({ setTableData, filters }) {
 
 /* populates the table component */
 function Table({ tableKeys, tableData }) {
+  /* Split keys and values in separate arrays to populate the table */
   const keyLabels = tableKeys ? Object.values(tableKeys) : [];
   const keys = tableKeys ? Object.keys(tableKeys) : [];
 
@@ -111,6 +115,7 @@ function Table({ tableKeys, tableData }) {
 /* Fetch table keys */
 async function getTableKeys() {
   try {
+    /* GET request for table keys */
     const response = await fetch("http://localhost:8080/keys");
     if (!response.ok) throw new Error(`Error: ${response.status}`);
     return await response.json();
@@ -122,6 +127,7 @@ async function getTableKeys() {
 
 async function setRowLimit(num) {
   try {
+    /* POST request with row limit to change to */
     const response = await fetch(`http://localhost:8080/limit/${num}`, {
       method: "POST",
     });
@@ -135,9 +141,8 @@ async function setRowLimit(num) {
 
 /* Fetch table data */
 async function getTableData(filterBool, filterStr) {
-  console.log(`http://localhost:8080/filter/${filterStr}`);
-
   if (!filterBool) {
+    /* GET request for all data */
     try {
       const response = await fetch("http://localhost:8080/all");
       if (!response.ok) throw new Error(`Error: ${response.status}`);
@@ -147,7 +152,7 @@ async function getTableData(filterBool, filterStr) {
       return null; // Return null in case of an error
     }
   } else {
-    /* Queries locally hosted fastAPI server */
+    /* GET request for filtered data */
     try {
       const response = await fetch(`http://localhost:8080/filter/${filterStr}`);
 

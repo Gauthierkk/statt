@@ -5,7 +5,9 @@ import requests
 from clean import clean, getKeyValues
 
 
-# Define config vars (api_url and api_key)
+# Define config vars (api_url and default fetch limit)
+# api_url defines the base url to fetch data from
+# limit defines how many rows will be returned
 class Settings(BaseSettings):
     api_url: str = "https://data.austintexas.gov/resource/3syk-w9eu.json"
     limit: int = 50
@@ -33,7 +35,7 @@ app.add_middleware(
 async def root():
     return {"health": "healthy"}
 
-# No Filter 
+# Fetches all data without a filter, with defined limit
 @app.get("/all")
 async def get_all():
 
@@ -46,7 +48,7 @@ async def get_all():
 
     return data
 
-
+# Fetches filtered data, with defined limit
 @app.get("/filter/{filters}")
 async def get_filtered(filters: str):
     baseurl = settings.api_url
@@ -62,16 +64,19 @@ async def get_filtered(filters: str):
 
     return data
 
+# Fetches all keys, used to define headers in output table
 @app.get("/keys")
 async def get_keys():
     
     return getKeyValues()
 
+# Sets the fetch limit
 @app.post("/limit/{limit}")
 async def set_limit(limit: int):
     settings.limit = limit
     return {"message": "limit set to " + str(limit)}
 
+# Gets the fetch limit
 @app.get("/limit")
 async def get_limit():
     return {"limit": settings.limit}
