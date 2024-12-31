@@ -31,3 +31,4 @@ The preset columns returned were selected based on their informational value. Th
 - Improve styling, especially in the form section.
 - Both the containers are set to run on the dev versions of their respective engines, for a production webapp this should be changed.
 - Build out fastAPI documentation for future users.
+- Implement paging in the result sections
