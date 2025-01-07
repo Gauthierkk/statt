@@ -31,6 +31,8 @@ export default function App() {
 /* populates the form input component and sends request on submit */
 function RequestForm({ setTableData, filters }) {
   const filterKeys = filters ? Object.keys(filters) : [];
+  const [filterType, setFilterType] = useState("all");
+  const [filter, setFilter] = useState("");
 
   /* row limit options */
   const rowLimits = [10, 25, 50, 100, 500, 1000];
@@ -40,11 +42,8 @@ function RequestForm({ setTableData, filters }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const filterSelect = document.getElementById("filter-select");
-    const filterBool = filterSelect.value !== "all";
-
-    const filterValue = document.getElementById("filter").value;
-    const filterStr = `${filterKeys[0]}=${filterValue}`;
+    const filterBool = filterType === "all" ? false : true;
+    const filterStr = `${filterType}=${filter}`;
 
     console.log(filterBool, filterStr);
 
@@ -62,13 +61,19 @@ function RequestForm({ setTableData, filters }) {
   return (
     <div className="form-container">
       <form>
-        <select id="filter-select">
-          {filterKeys.map((key) => (
-            <option key={key}>{filters[key]}</option>
-          ))}
+        <select
+          id="filter-select"
+          value={filterType}
+          onChange={(e) => setFilterType(e.target.value)}
+        >
           <option value="all">All</option>
+          {filterKeys.map((key) => (
+            <option key={key} value={key}>
+              {filters[key]}
+            </option>
+          ))}
         </select>
-        <input type="text" id="filter" />
+        <input type="text" onChange={(e) => setFilter(e.target.value)} />
         <button type="submit" onClick={handleSubmit}>
           Get
         </button>
