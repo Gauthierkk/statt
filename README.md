@@ -1,4 +1,4 @@
-# Coding Assessment for Statt
+# API call + front end excerise
 
 To start this web app, run docker compose up in the root directory. The frontend will run on localhost port 5173 (http://localhost:5173), and the backend will run on port 8080 (http://localhost:8080).
 Both the frontend and backend can be run as independent Docker containers using the docker_run.sh script located in their respective directories.
